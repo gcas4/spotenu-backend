@@ -1,0 +1,51 @@
+{
+  "name": "spotenu-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev ./src/local.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sls:start": "sls offline",
+    "sls:deploy": "sls deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gcas4/spotenu-backend.git"
+  },
+  "author": "Géssica Costa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gcas4/spotenu-backend/issues"
+  },
+  "homepage": "https://github.com/gcas4/spotenu-backend#readme",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/knex": "^0.16.1",
+    "@types/node": "^14.0.27",
+    "@types/uuid": "^8.0.1",
+    "serverless": "^1.74.1",
+    "serverless-dotenv-plugin": "^3.0.0",
+    "serverless-offline": "^6.5.0",
+    "serverless-webpack": "^5.3.3",
+    "ts-loader": "^8.0.2",
+    "ts-node-dev": "^1.0.0-pre.56",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.1",
+    "webpack-node-externals": "^2.5.1"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.4",
+    "mysql": "^2.18.1",
+    "serverless-http": "^2.5.0",
+    "uuid": "^8.3.0"
+  }
+}
