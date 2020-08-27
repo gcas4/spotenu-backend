@@ -16,7 +16,7 @@ export class UserBusiness {
         private idGenerator: IdGenerator
     ) { }
 
-    public async signup(input: SignupInputDTO, token?: string): Promise<void> {
+    async signup(input: SignupInputDTO, token?: string): Promise<void> {
 
         if (input.role === "ADMIN") {
             const tokenData = this.authenticator.getData(token!);
@@ -68,7 +68,7 @@ export class UserBusiness {
         )
     }
 
-    public async login(input: LoginDTO): Promise<string> {
+    async login(input: LoginDTO): Promise<string> {
 
         if (!input.nicknameOrEmail) {
             throw new InvalidInput("Invalid email or nickname");
@@ -90,7 +90,7 @@ export class UserBusiness {
         return accessToken;
     }
 
-    public async getAllBands(token: string): Promise<BandOutputDTO[]> {
+    async getAllBands(token: string): Promise<BandOutputDTO[]> {
 
         const tokenData = this.authenticator.getData(token)
 
@@ -103,7 +103,7 @@ export class UserBusiness {
         return bands;
     }
 
-    public async toApprove(token: string, input: BandApproveDTO): Promise<void> {
+    async toApprove(token: string, input: BandApproveDTO): Promise<void> {
 
         const nickname = input.nickname;
         const tokenData = this.authenticator.getData(token);
