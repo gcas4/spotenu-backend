@@ -33,7 +33,7 @@ export class User {
     setRole = (role: string) => this.role = role;
 
     public static toUserModel(object: any): User {
-        
+
         return new User(
             object.id,
             object.email,
@@ -48,27 +48,13 @@ export class User {
     }
 }
 
-export interface AdminInputDTO {
-    email: string,
-    name: string,
-    nickname: string,
-    password: string
-}
-
-export interface ListenerInputDTO {
+export interface SignupInputDTO {
     email: string,
     name: string,
     nickname: string,
     password: string,
-    role: string
-}
-
-export interface BandInputDTO {
-    email: string,
-    name: string,
-    nickname: string,
-    description: string,
-    password: string
+    role: string,
+    description?: string
 }
 
 export interface LoginDTO {
@@ -81,4 +67,8 @@ export interface BandOutputDTO {
     name: string,
     nickname: string,
     isApproved: boolean
+}
+
+export interface BandApproveDTO {
+    [index: string]: string
 }
