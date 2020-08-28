@@ -1,4 +1,4 @@
-import { GenreBusiness } from "../business/GenderBusiness";
+import { GenreBusiness } from "../business/GenreBusiness";
 import { GenreDatabase } from "../data/GenreDatabase";
 import { Authenticator } from "../services/Authenticator";
 import { IdGenerator } from "../services/IdGenerator";
