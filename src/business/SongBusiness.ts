@@ -1,7 +1,7 @@
 import { SongDatabase } from "../data/SongDatabase";
 import { Authenticator } from "../services/Authenticator";
 import { IdGenerator } from "../services/IdGenerator";
-import { SongInputDTO } from "../model/Song";
+import { SongInputDTO, Song } from "../model/Song";
 import { Unauthorized } from "../erros/Unauthorized";
 import { InvalidInput } from "../erros/InvalidInput";
 import { AlbumDatabase } from "../data/AlbumDatabase";
@@ -45,5 +45,13 @@ export class SongBusiness {
         const id = this.idGenerator.generate();
 
         await this.songDatabase.create(id, input.name, input.albumId);
+    }
+
+    async getAllSongs(token: string): Promise<Song[]> {
+
+        this.authenticator.getData(token);
+        const result = await this.songDatabase.getAllSongs();
+
+        return result;
     }
 }

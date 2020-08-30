@@ -6,4 +6,4 @@ export const songRouter = express.Router();
 const songController = new SongController();
 
 songRouter.post("/create", songController.create);
-// songRouter.get("/song", songController.getAllsongs);
+songRouter.get("/songs", songController.getAllSongs);

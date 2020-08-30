@@ -34,4 +34,20 @@ export class SongController {
             res.status(err.statusCode || 400).send({ error: err.message });
         }
     }
+
+    async getAllSongs(req: Request, res: Response) {
+        try {
+
+            const token = req.headers.authorization!;
+
+            const songs = await SongController.SongBusiness.getAllSongs(token);
+
+            await BaseDatabase.destroyConnection();
+            res.status(201).send({ songs });
+
+        } catch (err) {
+            await BaseDatabase.destroyConnection();
+            res.status(err.statusCode || 400).send({ error: err.message });
+        }
+    }
 }

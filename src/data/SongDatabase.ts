@@ -31,4 +31,17 @@ export class SongDatabase extends BaseDatabase {
             throw new GenericError(err.sqlMessage || err.message)
         }
     }
+
+    async getAllSongs(): Promise<Song[]> {
+        try {
+            const result = await super.getConnection()
+                .select("*")
+                .from(SongDatabase.TABLE_NAME);
+
+            return result;
+
+        } catch (err) {
+            throw new GenericError(err.sqlMessage || err.message)
+        }
+    }
 }
