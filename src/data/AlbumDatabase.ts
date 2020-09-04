@@ -3,7 +3,6 @@ import { GenericError } from "../erros/GenericError";
 import { Album } from "../model/Album";
 
 export class AlbumDatabase extends BaseDatabase {
-
     private static TABLE_NAME = "Album";
     private static AUXILIAR_TABLE_NAME = "AlbumGenre";
 
@@ -12,7 +11,6 @@ export class AlbumDatabase extends BaseDatabase {
             await super.getConnection()
                 .insert({ id, name, band_id })
                 .into(AlbumDatabase.TABLE_NAME);
-
         } catch (err) {
             throw new GenericError(err.sqlMessage || err.message)
         }
@@ -23,7 +21,6 @@ export class AlbumDatabase extends BaseDatabase {
             await super.getConnection()
                 .insert({ album_id, genre_id })
                 .into(AlbumDatabase.AUXILIAR_TABLE_NAME);
-
         } catch (err) {
             throw new GenericError(err.sqlMessage || err.message)
         }
@@ -34,9 +31,7 @@ export class AlbumDatabase extends BaseDatabase {
             const result = await super.getConnection()
                 .select("*")
                 .from(AlbumDatabase.TABLE_NAME);
-
             return result;
-
         } catch (err) {
             throw new GenericError(err.sqlMessage || err.message)
         }
@@ -48,9 +43,7 @@ export class AlbumDatabase extends BaseDatabase {
                 .select("*")
                 .from(AlbumDatabase.TABLE_NAME)
                 .where({ band_id });
-
             return result;
-
         } catch (err) {
             throw new GenericError(err.sqlMessage || err.message)
         }

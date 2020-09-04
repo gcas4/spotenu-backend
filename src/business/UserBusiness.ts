@@ -1,6 +1,6 @@
 import { IdGenerator } from "../services/IdGenerator";
 import { UserDatabase } from "../data/UserDatabase";
-import { LoginDTO, User, BandOutputDTO, BandApproveDTO, SignupInputDTO } from "../model/User";
+import { LoginInputDTO, LoginOutputDTO, User, BandOutputDTO, BandApproveDTO, SignupInputDTO } from "../model/User";
 import { HashManager } from "../services/HashManager";
 import { Authenticator } from "../services/Authenticator";
 import { InvalidInput } from "../erros/InvalidInput";
@@ -54,7 +54,6 @@ export class UserBusiness {
 
         const id = this.idGenerator.generate();
         const hashPassword = await this.hashManager.hash(input.password)
-
         await this.userDatabase.signup(
             id,
             input.email,
@@ -68,7 +67,7 @@ export class UserBusiness {
         )
     }
 
-    async login(input: LoginDTO): Promise<string> {
+    async login(input: LoginInputDTO): Promise<LoginOutputDTO> {
 
         if (!input.nicknameOrEmail) {
             throw new InvalidInput("Invalid email or nickname");
@@ -85,13 +84,12 @@ export class UserBusiness {
             throw new Unauthorized("Not approved")
         }
 
-        const accessToken = this.authenticator.generateToken({ id: user.getId(), role: user.getRole() });
-
-        return accessToken;
+        const role = user.getRole();
+        const accessToken = this.authenticator.generateToken({ id: user.getId(), role: role });
+        return { accessToken, role };
     }
 
     async getAllBands(token: string): Promise<BandOutputDTO[]> {
-
         const tokenData = this.authenticator.getData(token)
 
         if (tokenData.role !== "ADMIN") {
@@ -99,12 +97,10 @@ export class UserBusiness {
         }
 
         const bands = await this.userDatabase.getAllBands();
-
         return bands;
     }
 
     async toApprove(token: string, input: BandApproveDTO): Promise<void> {
-
         const nickname = input.nickname;
         const tokenData = this.authenticator.getData(token);
 
@@ -123,7 +119,6 @@ export class UserBusiness {
             .filter((b: any) => b.nickname === nickname)
             .map((b: any) => b.isApproved);
 
-        //TODO: criar essa query para o banco
         if (isApproved[0]) {
             throw new GenericError("Band already approved");
         }
@@ -161,7 +156,6 @@ const roleManager = (role: string): Permissions => {
         default:
             break;
     }
-
     return { isApproved, isBlocked }
 }
 

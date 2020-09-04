@@ -17,8 +17,8 @@ export class SongBusiness {
     ) { }
 
     async create(input: SongInputDTO, token: string): Promise<void> {
-
         const tokenData = this.authenticator.getData(token);
+
         if (tokenData.role !== "BAND") {
             throw new Unauthorized("Only bands can create albums");
         }
@@ -32,6 +32,7 @@ export class SongBusiness {
         }
 
         const bandAlbums = await this.albumDatabase.getBandAlbumsById(tokenData.id);
+
         if (bandAlbums.length === 0) {
             throw new NotFoundError("Album does not exist")
         }
@@ -43,15 +44,12 @@ export class SongBusiness {
         }
 
         const id = this.idGenerator.generate();
-
         await this.songDatabase.create(id, input.name, input.albumId);
     }
 
     async getAllSongs(token: string): Promise<Song[]> {
-
         this.authenticator.getData(token);
         const result = await this.songDatabase.getAllSongs();
-
         return result;
     }
 }

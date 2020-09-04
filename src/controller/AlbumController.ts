@@ -17,18 +17,14 @@ export class AlbumController {
 
     async create(req: Request, res: Response) {
         try {
-
             const input: AlbumInputDTO = {
                 name: req.body.name,
                 genres: req.body.genres
             }
-
             const token = req.headers.authorization!;
-
             await AlbumController.AlbumBusiness.create(input, token);
             await BaseDatabase.destroyConnection();
             res.status(201).send({ message: "Album created!" });
-
         } catch (err) {
             await BaseDatabase.destroyConnection();
             res.status(err.statusCode || 400).send({ error: err.message });
@@ -37,14 +33,10 @@ export class AlbumController {
 
     async getAllAlbums(req: Request, res: Response) {
         try {
-
             const token = req.headers.authorization!;
-
             const albums = await AlbumController.AlbumBusiness.getAllAlbums(token);
-
             await BaseDatabase.destroyConnection();
             res.status(201).send({ albums });
-
         } catch (err) {
             await BaseDatabase.destroyConnection();
             res.status(err.statusCode || 400).send({ error: err.message });
@@ -53,14 +45,10 @@ export class AlbumController {
 
     async getBandAlbumsById(req: Request, res: Response) {
         try {
-
             const token = req.headers.authorization!;
-
             const albums = await AlbumController.AlbumBusiness.getBandAlbumsById(token);
-
             await BaseDatabase.destroyConnection();
             res.status(201).send({ albums });
-
         } catch (err) {
             await BaseDatabase.destroyConnection();
             res.status(err.statusCode || 400).send({ error: err.message });

@@ -17,18 +17,14 @@ export class SongController {
 
     async create(req: Request, res: Response) {
         try {
-
             const input: SongInputDTO = {
                 name: req.body.name,
                 albumId: req.body.albumId
             }
-
             const token = req.headers.authorization!;
-
             await SongController.SongBusiness.create(input, token);
             await BaseDatabase.destroyConnection();
             res.status(201).send({ message: "Song created!" });
-
         } catch (err) {
             await BaseDatabase.destroyConnection();
             res.status(err.statusCode || 400).send({ error: err.message });
@@ -37,14 +33,10 @@ export class SongController {
 
     async getAllSongs(req: Request, res: Response) {
         try {
-
             const token = req.headers.authorization!;
-
             const songs = await SongController.SongBusiness.getAllSongs(token);
-
             await BaseDatabase.destroyConnection();
             res.status(201).send({ songs });
-
         } catch (err) {
             await BaseDatabase.destroyConnection();
             res.status(err.statusCode || 400).send({ error: err.message });

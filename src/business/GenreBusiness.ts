@@ -13,8 +13,8 @@ export class GenreBusiness {
     ) { }
 
     async create(input: GenreInputDTO, token: string): Promise<void> {
-
         const tokenData = this.authenticator.getData(token);
+
         if (tokenData.role !== "ADMIN") {
             throw new Unauthorized("Only admins can create genres");
         }
@@ -24,19 +24,17 @@ export class GenreBusiness {
         }
 
         const id = this.idGenerator.generate();
-
         await this.genreDatabase.create(id, input.name);
     }
 
     async getAllGenres(token: string): Promise<Genre[]> {
-
         const tokenData = this.authenticator.getData(token);
+        
         if (tokenData.role !== "ADMIN" && tokenData.role !== "BAND") {
             throw new Unauthorized("Only admins or bands can get genres")
         }
 
         const genres = await this.genreDatabase.getAllGenres();
-
         return genres;
     }
 }

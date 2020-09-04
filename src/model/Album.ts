@@ -1,5 +1,4 @@
 export class Album {
-
     constructor(
         private id: string,
         private name: string,
@@ -15,7 +14,6 @@ export class Album {
     setBandId = (bandId: string) => this.bandId = bandId;
 
     static toAlbumModel(object: any): Album {
-
         return new Album(
             object.id,
             object.name,

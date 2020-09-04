@@ -1,5 +1,4 @@
 export class User {
-
     constructor(
         private id: string,
         private email: string,
@@ -33,7 +32,6 @@ export class User {
     setRole = (role: string) => this.role = role;
 
     public static toUserModel(object: any): User {
-
         return new User(
             object.id,
             object.email,
@@ -57,9 +55,14 @@ export interface SignupInputDTO {
     description?: string
 }
 
-export interface LoginDTO {
+export interface LoginInputDTO {
     nicknameOrEmail: string,
     password: string
+}
+
+export interface LoginOutputDTO {
+    accessToken: string,
+    role: string
 }
 
 export interface BandOutputDTO {

@@ -15,17 +15,13 @@ export class GenreController {
 
     async create(req: Request, res: Response) {
         try {
-
             const input: GenreInputDTO = {
                 name: req.body.name
             }
-
             const token = req.headers.authorization!;
-
             await GenreController.GenreBusiness.create(input, token);
             await BaseDatabase.destroyConnection();
             res.status(201).send({ message: "Genre created!" });
-
         } catch (err) {
             await BaseDatabase.destroyConnection();
             res.status(err.statusCode || 400).send({ error: err.message });
@@ -34,13 +30,10 @@ export class GenreController {
 
     async getAllGenres(req: Request, res: Response) {
         try {
-
             const token = req.headers.authorization!;
-
             const genres = await GenreController.GenreBusiness.getAllGenres(token);
             await BaseDatabase.destroyConnection();
             res.status(200).send({ genres });
-
         } catch (err) {
             await BaseDatabase.destroyConnection();
             res.status(err.statusCode || 400).send({ error: err.message });

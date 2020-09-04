@@ -1,5 +1,4 @@
 export class Genre {
-
     constructor(
         private id: string,
         private name: string
@@ -12,7 +11,6 @@ export class Genre {
     setName = (name: string) => this.name = name;
 
     static toGenreModel(object: any): Genre {
-
         return new Genre(
             object.id,
             object.name

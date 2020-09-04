@@ -15,8 +15,8 @@ export class AlbumBusiness {
     ) { }
 
     async create(input: AlbumInputDTO, token: string): Promise<void> {
-
         const tokenData = this.authenticator.getData(token);
+
         if (tokenData.role !== "BAND") {
             throw new Unauthorized("Only bands can create albums");
         }
@@ -30,37 +30,34 @@ export class AlbumBusiness {
         }
 
         // Checking if genres exist before creating the album
-        for (let i of input.genres) {
-            const genre = await this.genreDatabase.getGenreByName(i);
+        for (let genre of input.genres) {
+            await this.genreDatabase.getGenreByName(genre);
         }
 
         const id = this.idGenerator.generate();
 
         // Creating the album by inserting data into the Album and AlbumGenre tables
         await this.albumDatabase.create(id, input.name, tokenData.id);
-        for (let i of input.genres) {
-            const genre = await this.genreDatabase.getGenreByName(i);
-            await this.albumDatabase.createAlbumGenre(id, genre.getId())
+        for (let genre of input.genres) {
+            const genreData = await this.genreDatabase.getGenreByName(genre);
+            await this.albumDatabase.createAlbumGenre(id, genreData.getId())
         }
     }
 
     async getAllAlbums(token: string): Promise<Album[]> {
-
         this.authenticator.getData(token);
         const result = await this.albumDatabase.getAllAlbums();
-
         return result;
     }
 
     async getBandAlbumsById(token: string): Promise<Album[]> {
-
         const tokenData = this.authenticator.getData(token);
-        
-        if(tokenData.role !== "BAND"){
+
+        if (tokenData.role !== "BAND") {
             throw new Unauthorized("Only bands can get their albums")
         }
-        const result = await this.albumDatabase.getBandAlbumsById(tokenData.id);
 
+        const result = await this.albumDatabase.getBandAlbumsById(tokenData.id);
         return result;
     }
 }
